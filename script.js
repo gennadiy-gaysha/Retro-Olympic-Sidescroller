@@ -13,6 +13,7 @@ kaboom({ width: window.innerWidth, height: window.innerHeight });
 // loadSprite("athlete", "assets/sprites/man.png");
 loadSprite("athlete-1", "assets/images/athlete-1.png");
 loadSprite("athlete-2", "assets/images/athlete-2.png");
+loadSprite("athlete-3", "assets/images/athlete-3.png");
 loadSprite("background", "assets/sprites/backgroundtwo.jpg");
 
 function addButton(txt, p, f) {
@@ -68,12 +69,13 @@ scene("game", () => {
   ]);
 
   // define gravity
-  setGravity(1600);
+  setGravity(1700);
   // ===============================================================
   let currentFrame = 0;
 
   // Define an array for the running animation frames
   const runAnim = [sprite("athlete-1"), sprite("athlete-2")];
+  const sitAnim = [sprite("athlete-1"), sprite("athlete-3")];
 
   const player = add([
     // Use the initial frame of the animation
@@ -83,22 +85,34 @@ scene("game", () => {
     body(),
   ]);
 
-  // Define a loop to change the runner's sprite frame
-  loop(0.2, () => {
-    currentFrame++;
-    if (currentFrame >= runAnim.length) {
-      currentFrame = 0;
+  let isSitting = false;
+  const frameInterval = 0.2; // Animation frame interval
+
+  // Function to make the player sit
+  function sit_jump() {
+    // Only sit if the player is on the ground and not already sitting
+    if (player.isGrounded() && !isSitting) {
+      isSitting = true;
+      player.use(sitAnim[1]);
+      wait(0.2, () => {
+        jump_plus();
+      });
+
+      // Wait for 2 seconds before transitioning back to running animation
+      wait(0.2, () => {
+        player.use(runAnim[0]);
+        isSitting = false;
+      });
     }
-    player.use(runAnim[currentFrame]);
+  }
+
+  // Animation loop using loop function
+  loop(frameInterval, () => {
+    if (!isSitting) {
+      currentFrame = (currentFrame + 1) % runAnim.length;
+      player.use(runAnim[currentFrame]);
+    }
   });
-  // add a game object to screen
-  //   const player = add([
-  //     // list of components
-  //     sprite("athlete"),
-  //     pos(80, 40),
-  //     area(),
-  //     body(),
-  //   ]);
   // ===============================================================
   // floor
   add([
@@ -113,13 +127,23 @@ scene("game", () => {
 
   function jump() {
     if (player.isGrounded()) {
+      setGravity(1700); // Set gravity to 1600
+      player.jump(JUMP_FORCE);
+    }
+  }
+
+  function jump_plus() {
+    if (player.isGrounded()) {
+      setGravity(1100); // Set gravity to 1600
       player.jump(JUMP_FORCE);
     }
   }
 
   // jump when user press space
   onKeyPress("space", jump);
+  onKeyPress("up", jump);
   onClick(jump);
+  onKeyPress("down", sit_jump);
 
   function spawnTree() {
     // add tree obj

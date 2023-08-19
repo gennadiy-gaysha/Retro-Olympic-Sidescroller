@@ -13,16 +13,12 @@ kaboom({ width: window.innerWidth, height: window.innerHeight });
 // loadSprite("athlete", "assets/sprites/man.png");
 loadSprite("athlete-1", "assets/images/athlete-1.png");
 loadSprite("athlete-2", "assets/images/athlete-2.png");
-<<<<<<< HEAD
 loadSprite("athlete-3", "assets/images/athlete-3.png");
 loadSprite("background", "assets/sprites/backgroundtwo.jpg");
-=======
-loadSprite("background", "assets/images/backgroundtwo.jpg");
->>>>>>> main
 
 // LOAD ASSETS
 loadSprite("athlete", "assets/sprites/man.png");
-loadSprite("background", "assets/images/backgroundtwo.jpg"); 
+loadSprite("background", "assets/images/backgroundtwo.jpg");
 
 //START MENU
 function addButton(txt, p, f) {

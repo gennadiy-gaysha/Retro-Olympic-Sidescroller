@@ -13,9 +13,18 @@ kaboom({ width: window.innerWidth, height: window.innerHeight });
 // loadSprite("athlete", "assets/sprites/man.png");
 loadSprite("athlete-1", "assets/images/athlete-1.png");
 loadSprite("athlete-2", "assets/images/athlete-2.png");
+<<<<<<< HEAD
 loadSprite("athlete-3", "assets/images/athlete-3.png");
 loadSprite("background", "assets/sprites/backgroundtwo.jpg");
+=======
+loadSprite("background", "assets/images/backgroundtwo.jpg");
+>>>>>>> main
 
+// LOAD ASSETS
+loadSprite("athlete", "assets/sprites/man.png");
+loadSprite("background", "assets/images/backgroundtwo.jpg"); 
+
+//START MENU
 function addButton(txt, p, f) {
   // add a parent background object
   const btn = add([
@@ -57,6 +66,7 @@ addButton("Start", vec2(700, 600), () => {
   go("game");
 });
 
+//GAMEPLAY//
 scene("game", () => {
   // Draw the background image onto the canvas
   const bgImage = add([
@@ -185,6 +195,7 @@ scene("game", () => {
   });
 });
 
+//GAME OVER SCREEN
 scene("lose", (score) => {
   add([sprite("athlete-1"), pos(width() / 2, height() / 2 - 80), scale(1), anchor("center")]);
 
